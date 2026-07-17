@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="theme-color" content="#0b1e36" />
+  <title>9 Point Game — Golf Scoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-name">9 Point Game</span>
+      </a>
+      <a class="btn btn-crimson btn-sm" href="new.html">Start</a>
+    </div>
+    <div class="header-rule"></div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Points on every hole</p>
+        <h1 class="hero-title">Keep score.<br />Everyone watches live.</h1>
+        <p class="hero-sub">
+          One golfer enters scores as the round goes. Everyone else in the
+          group sees the points update, hole by hole, on their own phone.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-crimson btn-block" href="new.html">Start a Round</a>
+          <a class="btn btn-outline btn-block" href="join.html">Join with a Code</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game selection -->
+    <section class="section wrap">
+      <div class="section-head">
+        <h2 class="section-title">Choose a game</h2>
+        <span class="section-note">3 formats</span>
+      </div>
+
+      <div class="game-list">
+        <a class="game-card" href="new.html?game=3p9">
+          <p class="game-players">3 Players</p>
+          <h3 class="game-name">3-Man / 9-Point</h3>
+          <div class="game-points">
+            <span class="game-points-num">9</span>
+            <span class="game-points-label">points on the table, every hole</span>
+          </div>
+          <p class="game-table">5 · 3 · 1</p>
+          <span class="game-cta">Set up this game →</span>
+        </a>
+
+        <a class="game-card" href="new.html?game=4p12">
+          <p class="game-players">4 Players</p>
+          <h3 class="game-name">4-Man / 12-Point</h3>
+          <div class="game-points">
+            <span class="game-points-num">12</span>
+            <span class="game-points-label">points on the table, every hole</span>
+          </div>
+          <p class="game-table">5 · 4 · 2 · 1</p>
+          <span class="game-cta">Set up this game →</span>
+        </a>
+
+        <a class="game-card" href="new.html?game=5p15">
+          <p class="game-players">5 Players</p>
+          <h3 class="game-name">5-Man / 15-Point</h3>
+          <div class="game-points">
+            <span class="game-points-num">15</span>
+            <span class="game-points-label">points on the table, every hole</span>
+          </div>
+          <p class="game-table">5 · 4 · 3 · 2 · 1</p>
+          <span class="game-cta">Set up this game →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section-alt">
+      <div class="wrap steps">
+        <div class="step">
+          <p class="step-label">Set up</p>
+          <p class="step-copy">
+            Pick a game and match length, add players, and turn on any bonus
+            points for birdies, eagles, or a hole-in-one.
+          </p>
+        </div>
+        <div class="step">
+          <p class="step-label">Score</p>
+          <p class="step-copy">
+            One scorekeeper enters gross strokes per hole. Points are split
+            automatically, ties included.
+          </p>
+        </div>
+        <div class="step">
+          <p class="step-label">Watch</p>
+          <p class="step-copy">
+            Everyone else sees the running total update live on their own
+            phone, no waiting for the turn.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="footer-text">
+        An independent scoring app for the 3-man/9-point, 4-man/12-point, and
+        5-man/15-point games. Not affiliated with the USGA.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

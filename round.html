@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="theme-color" content="#0b1e36" />
+  <title>Round — 9 Point Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-name">9 Point Game</span>
+      </a>
+      <a class="btn btn-crimson btn-sm" href="new.html">Start</a>
+    </div>
+    <div class="header-rule"></div>
+  </header>
+
+  <main>
+    <section class="wrap">
+      <div class="round-head">
+        <div>
+          <p class="eyebrow">Round Code</p>
+          <h1 class="round-code" id="round-code">—</h1>
+          <p class="page-sub" id="round-meta">Loading…</p>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" id="share-btn">Share</button>
+      </div>
+
+      <!-- One plaque per match, injected by js/round.js -->
+      <div class="plaque-stack" id="plaque-stack">
+        <p class="page-sub" id="loading-msg">Loading the leaderboard…</p>
+      </div>
+
+      <!-- Scorekeeper-only score entry mounts here -->
+      <div id="score-entry"></div>
+
+      <!-- Hole-by-hole breakdown -->
+      <section class="section" id="hole-section" hidden>
+        <h2 class="setup-h" id="hole-section-title">Hole by Hole</h2>
+        <div class="hole-table-wrap">
+          <table class="hole-table" id="hole-table"><!-- filled by js --></table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="footer-text">
+        An independent scoring app for the 3-man/9-point, 4-man/12-point, and
+        5-man/15-point games. Not affiliated with the USGA.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/scoring.js" defer></script>
+  <script src="js/round.js" type="module"></script>
+</body>
+</html>
