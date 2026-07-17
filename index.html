@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
   <meta name="theme-color" content="#0b1e36" />
-  <title>9 Point Game — Golf Scoring</title>
+  <title>9 Point Game — Live Golf Scoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap"
     rel="stylesheet"
@@ -14,111 +15,239 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="index.html">
-        <span class="brand-name">9 Point Game</span>
-      </a>
-      <a class="btn btn-crimson btn-sm" href="new.html">Start</a>
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="masthead-top">
+      <div class="wrap masthead-top-inner">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">9</span>
+          <span class="brand-name">9&nbsp;Point&nbsp;Game</span>
+        </a>
+        <div class="masthead-actions">
+          <a class="btn btn-ghost btn-sm" href="join.html">Join</a>
+          <a class="btn btn-crimson btn-sm" href="new.html">Start a Round</a>
+        </div>
+      </div>
     </div>
+    <nav class="masthead-nav">
+      <div class="wrap masthead-nav-inner">
+        <a class="nav-link is-active" href="index.html">Home</a>
+        <a class="nav-link" href="new.html">New Round</a>
+        <a class="nav-link" href="join.html">Join</a>
+        <a class="nav-link" href="#games">Games</a>
+        <a class="nav-link" href="#how">How It's Scored</a>
+      </div>
+    </nav>
     <div class="header-rule"></div>
   </header>
 
   <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow">Points on every hole</p>
-        <h1 class="hero-title">Keep score.<br />Everyone watches live.</h1>
-        <p class="hero-sub">
-          One golfer enters scores as the round goes. Everyone else in the
-          group sees the points update, hole by hole, on their own phone.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-crimson btn-block" href="new.html">Start a Round</a>
-          <a class="btn btn-outline btn-block" href="join.html">Join with a Code</a>
+    <!-- Hero: the app IS the hero. Live scoreboard on a course backdrop. -->
+    <section class="hero-live">
+      <div class="hero-live-bg" aria-hidden="true"></div>
+      <div class="hero-live-scrim" aria-hidden="true"></div>
+      <div class="wrap hero-live-inner">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow-light">Live from the course</p>
+          <h1 class="hero-title-lg">The points game,<br />scored in real time.</h1>
+          <p class="hero-sub-light">
+            One golfer keeps score. Everyone else watches the points move on
+            their own phone — hole by hole, match by match.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-crimson btn-block" href="new.html">Start a Round</a>
+            <a class="btn btn-onphoto btn-block" href="join.html">Join with a Code</a>
+          </div>
+        </div>
+
+        <!-- Sample live scoreboard -->
+        <div class="plaque hero-plaque">
+          <div class="plaque-head">
+            <div>
+              <div class="plaque-title">Saturday Group</div>
+              <div class="plaque-sub">4-Man / 12-Point · Match 2</div>
+            </div>
+            <span class="status status-live"><span class="live-dot"></span>Live</span>
+          </div>
+          <div class="plaque-row">
+            <div class="rank-badge is-leader">1</div>
+            <div class="plaque-name">
+              <div class="plaque-player">J. Alvarez</div>
+              <div class="plaque-meta">Thru 11 · +5 last hole</div>
+            </div>
+            <div class="plaque-total tabular">34</div>
+          </div>
+          <div class="plaque-row">
+            <div class="rank-badge">2</div>
+            <div class="plaque-name">
+              <div class="plaque-player">M. Okafor</div>
+              <div class="plaque-meta">Thru 11 · +3 last hole</div>
+            </div>
+            <div class="plaque-total tabular">29</div>
+          </div>
+          <div class="plaque-row">
+            <div class="rank-badge">3</div>
+            <div class="plaque-name">
+              <div class="plaque-player">S. Whitfield</div>
+              <div class="plaque-meta">Thru 11 · +3 last hole</div>
+            </div>
+            <div class="plaque-total tabular">27</div>
+          </div>
+          <div class="plaque-row">
+            <div class="rank-badge">4</div>
+            <div class="plaque-name">
+              <div class="plaque-player">D. Park</div>
+              <div class="plaque-meta">Thru 11 · +1 last hole</div>
+            </div>
+            <div class="plaque-total tabular">19</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Game selection -->
-    <section class="section wrap">
+    <!-- Stat strip -->
+    <section class="stat-strip">
+      <div class="wrap stat-strip-inner">
+        <div class="stat">
+          <span class="stat-num tabular">3</span>
+          <span class="stat-label">Game formats</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num tabular">6·9·18</span>
+          <span class="stat-label">Match lengths</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num tabular">∞</span>
+          <span class="stat-label">Viewers per round</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num tabular">0</span>
+          <span class="stat-label">Apps to install</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Games as editorial cards with imagery -->
+    <section class="section wrap" id="games">
       <div class="section-head">
-        <h2 class="section-title">Choose a game</h2>
+        <h2 class="section-title">Choose your game</h2>
         <span class="section-note">3 formats</span>
       </div>
 
-      <div class="game-list">
-        <a class="game-card" href="new.html?game=3p9">
-          <p class="game-players">3 Players</p>
-          <h3 class="game-name">3-Man / 9-Point</h3>
-          <div class="game-points">
-            <span class="game-points-num">9</span>
-            <span class="game-points-label">points on the table, every hole</span>
+      <div class="game-grid">
+        <a class="game-tile" href="new.html?game=3p9">
+          <div class="game-tile-photo photo-3" aria-hidden="true">
+            <span class="game-tile-badge">3 Players</span>
           </div>
-          <p class="game-table">5 · 3 · 1</p>
-          <span class="game-cta">Set up this game →</span>
+          <div class="game-tile-body">
+            <h3 class="game-tile-name">3-Man / 9-Point</h3>
+            <p class="game-tile-split">Points split 5 · 3 · 1 every hole</p>
+            <span class="game-cta">Set up →</span>
+          </div>
         </a>
 
-        <a class="game-card" href="new.html?game=4p12">
-          <p class="game-players">4 Players</p>
-          <h3 class="game-name">4-Man / 12-Point</h3>
-          <div class="game-points">
-            <span class="game-points-num">12</span>
-            <span class="game-points-label">points on the table, every hole</span>
+        <a class="game-tile" href="new.html?game=4p12">
+          <div class="game-tile-photo photo-4" aria-hidden="true">
+            <span class="game-tile-badge">4 Players</span>
           </div>
-          <p class="game-table">5 · 4 · 2 · 1</p>
-          <span class="game-cta">Set up this game →</span>
+          <div class="game-tile-body">
+            <h3 class="game-tile-name">4-Man / 12-Point</h3>
+            <p class="game-tile-split">Points split 5 · 4 · 2 · 1 every hole</p>
+            <span class="game-cta">Set up →</span>
+          </div>
         </a>
 
-        <a class="game-card" href="new.html?game=5p15">
-          <p class="game-players">5 Players</p>
-          <h3 class="game-name">5-Man / 15-Point</h3>
-          <div class="game-points">
-            <span class="game-points-num">15</span>
-            <span class="game-points-label">points on the table, every hole</span>
+        <a class="game-tile" href="new.html?game=5p15">
+          <div class="game-tile-photo photo-5" aria-hidden="true">
+            <span class="game-tile-badge">5 Players</span>
           </div>
-          <p class="game-table">5 · 4 · 3 · 2 · 1</p>
-          <span class="game-cta">Set up this game →</span>
+          <div class="game-tile-body">
+            <h3 class="game-tile-name">5-Man / 15-Point</h3>
+            <p class="game-tile-split">Points split 5 · 4 · 3 · 2 · 1 every hole</p>
+            <span class="game-cta">Set up →</span>
+          </div>
         </a>
+      </div>
+    </section>
+
+    <!-- Feature band with photo -->
+    <section class="feature-band">
+      <div class="feature-photo" aria-hidden="true"></div>
+      <div class="feature-content">
+        <div class="wrap">
+          <p class="eyebrow eyebrow-light">Bonus scoring</p>
+          <h2 class="feature-title">Play it your way.</h2>
+          <p class="feature-copy">
+            Turn on bonus points for a gross birdie, eagle, or a hole-in-one.
+            Add the skunk rule — win a hole by two clear strokes and take every
+            point on it. Split the round into 6-, 9-, or 18-hole matches. All
+            optional, all set at the tee.
+          </p>
+          <a class="btn btn-crimson" href="new.html">Build your round</a>
+        </div>
       </div>
     </section>
 
     <!-- How it works -->
-    <section class="section-alt">
-      <div class="wrap steps">
-        <div class="step">
-          <p class="step-label">Set up</p>
-          <p class="step-copy">
-            Pick a game and match length, add players, and turn on any bonus
-            points for birdies, eagles, or a hole-in-one.
-          </p>
+    <section class="section-alt" id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="section-title">How it's scored</h2>
+          <span class="section-note">3 steps</span>
         </div>
-        <div class="step">
-          <p class="step-label">Score</p>
-          <p class="step-copy">
-            One scorekeeper enters gross strokes per hole. Points are split
-            automatically, ties included.
-          </p>
+        <div class="steps">
+          <div class="step">
+            <span class="step-index tabular">01</span>
+            <p class="step-label">Set up</p>
+            <p class="step-copy">
+              Pick a game and match length, add players, flip on any bonus
+              points. You get a room code to share.
+            </p>
+          </div>
+          <div class="step">
+            <span class="step-index tabular">02</span>
+            <p class="step-label">Score</p>
+            <p class="step-copy">
+              One scorekeeper enters gross strokes per hole. Points split
+              automatically — ties, skunks, and bonuses handled.
+            </p>
+          </div>
+          <div class="step">
+            <span class="step-index tabular">03</span>
+            <p class="step-label">Watch</p>
+            <p class="step-copy">
+              Everyone else opens the code and watches the leaderboard update
+              live, no refresh, no waiting for the turn.
+            </p>
+          </div>
         </div>
-        <div class="step">
-          <p class="step-label">Watch</p>
-          <p class="step-copy">
-            Everyone else sees the running total update live on their own
-            phone, no waiting for the turn.
-          </p>
-        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="cta-band">
+      <div class="wrap cta-band-inner">
+        <h2 class="cta-title">Next round, keep it honest.</h2>
+        <a class="btn btn-crimson btn-lg" href="new.html">Start a Round</a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p class="footer-text">
-        An independent scoring app for the 3-man/9-point, 4-man/12-point, and
-        5-man/15-point games. Not affiliated with the USGA.
-      </p>
+    <div class="wrap site-footer-inner">
+      <div>
+        <span class="brand-name footer-brand">9 Point Game</span>
+        <p class="footer-text">
+          An independent scoring app for the 3-man/9-point, 4-man/12-point,
+          and 5-man/15-point games. Not affiliated with the USGA.
+        </p>
+      </div>
+      <nav class="footer-nav">
+        <a href="new.html">New Round</a>
+        <a href="join.html">Join</a>
+        <a href="#games">Games</a>
+        <a href="#how">How It's Scored</a>
+      </nav>
     </div>
   </footer>
 </body>

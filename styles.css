@@ -20,6 +20,17 @@
   --font-display: "IBM Plex Serif", Georgia, serif;
   --font-sans: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ---- Landing page imagery (Unsplash) ----
+     Swap any of these if a photo doesn't load. Format:
+     https://images.unsplash.com/photo-XXXX?auto=format&fit=crop&w=1400&q=70
+     Grab a new one from unsplash.com -> pick a photo -> the URL is
+     images.unsplash.com/photo-... (keep the ?auto=format&fit=crop part). */
+  --img-hero: url("https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&w=1400&q=70");
+  --img-feature: url("https://images.unsplash.com/photo-1535132011086-b8818f016104?auto=format&fit=crop&w=1400&q=70");
+  --img-game-3: url("https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=800&q=70");
+  --img-game-4: url("https://images.unsplash.com/photo-1592919505780-303950717480?auto=format&fit=crop&w=800&q=70");
+  --img-game-5: url("https://images.unsplash.com/photo-1600861194942-f883de0dfe96?auto=format&fit=crop&w=800&q=70");
 }
 
 /* ---------- Reset ---------- */
@@ -761,5 +772,447 @@ table.hole-table {
   }
   * {
     transition: none !important;
+  }
+}
+
+/* =========================================================
+   REDESIGN — masthead, image hero, editorial tiles.
+   Appended block; mobile-first with a 640px+ widen at end.
+   Golf photography from Unsplash, each layered over a navy
+   gradient so a failed image degrades to a dark panel,
+   never a broken-image icon.
+   ========================================================= */
+
+/* ---------- Masthead ---------- */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--navy-950);
+  color: #fff;
+}
+.masthead-top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--crimson);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 2px;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.masthead-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-ghost {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.btn-ghost:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.masthead-nav {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.masthead-nav::-webkit-scrollbar {
+  display: none;
+}
+.masthead-nav-inner {
+  display: flex;
+  gap: 4px;
+  white-space: nowrap;
+}
+.nav-link {
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 2px solid transparent;
+}
+.nav-link.is-active {
+  color: #fff;
+  border-bottom-color: var(--crimson);
+}
+.nav-link:active {
+  color: #fff;
+}
+
+/* ---------- Live hero ---------- */
+.hero-live {
+  position: relative;
+  isolation: isolate;
+  background: var(--navy-950);
+  overflow: hidden;
+}
+.hero-live-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(11, 30, 54, 0.55), rgba(11, 30, 54, 0.85)),
+    var(--img-hero) center / cover no-repeat,
+    var(--navy-950);
+}
+.hero-live-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 30, 54, 0.65) 0%,
+    rgba(11, 30, 54, 0.2) 100%
+  );
+}
+.hero-live-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 40px;
+  padding-bottom: 44px;
+}
+.eyebrow-light {
+  color: #fff;
+  opacity: 0.85;
+}
+.hero-title-lg {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1.08;
+  font-weight: 700;
+  color: #fff;
+}
+.hero-sub-light {
+  margin-top: 16px;
+  max-width: 30rem;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.btn-onphoto {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+  backdrop-filter: blur(4px);
+}
+.btn-onphoto:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+.hero-plaque {
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Stat strip ---------- */
+.stat-strip {
+  background: var(--navy-800);
+  color: #fff;
+}
+.stat-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+.stat {
+  background: var(--navy-800);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
+.stat-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Game tiles with photos ---------- */
+.game-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.game-tile {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--paper-line);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.game-tile:active {
+  transform: translateY(1px);
+}
+.game-tile-photo {
+  position: relative;
+  height: 140px;
+  background-color: var(--navy-800);
+  background-size: cover;
+  background-position: center;
+}
+.photo-3 {
+  background-image: linear-gradient(
+      180deg,
+      rgba(11, 30, 54, 0.15),
+      rgba(11, 30, 54, 0.55)
+    ),
+    var(--img-game-3);
+}
+.photo-4 {
+  background-image: linear-gradient(
+      180deg,
+      rgba(11, 30, 54, 0.15),
+      rgba(11, 30, 54, 0.55)
+    ),
+    var(--img-game-4);
+}
+.photo-5 {
+  background-image: linear-gradient(
+      180deg,
+      rgba(11, 30, 54, 0.15),
+      rgba(11, 30, 54, 0.55)
+    ),
+    var(--img-game-5);
+}
+.game-tile-badge {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  background: var(--crimson);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+.game-tile-body {
+  padding: 18px 20px 20px;
+}
+.game-tile-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy-950);
+}
+.game-tile-split {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.game-tile .game-cta {
+  margin-top: 14px;
+}
+
+/* ---------- Feature band ---------- */
+.feature-band {
+  position: relative;
+  margin-top: 8px;
+  background: var(--navy-950);
+  color: #fff;
+  isolation: isolate;
+}
+.feature-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(11, 30, 54, 0.8), rgba(11, 30, 54, 0.92)),
+    var(--img-feature) center / cover no-repeat,
+    var(--navy-950);
+}
+.feature-content {
+  padding: 48px 0;
+}
+.feature-title {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+}
+.feature-copy {
+  margin-top: 14px;
+  max-width: 34rem;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+}
+
+/* ---------- Step index numbers ---------- */
+.step-index {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--crimson);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.section-alt .steps {
+  margin-top: 24px;
+}
+
+/* ---------- Closing CTA ---------- */
+.cta-band {
+  background: var(--crimson);
+  color: #fff;
+}
+.cta-band-inner {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+.btn-lg {
+  min-height: 52px;
+  padding: 0 32px;
+  font-size: 14px;
+}
+.cta-band .btn-crimson {
+  background: #fff;
+  color: var(--crimson);
+}
+.cta-band .btn-crimson:active {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* ---------- Footer upgrade ---------- */
+.site-footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.footer-brand {
+  color: var(--navy-950);
+  font-size: 16px;
+}
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-nav a {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   Wider screens for redesign pieces
+   ========================================================= */
+@media (min-width: 640px) {
+  .hero-title-lg {
+    font-size: 52px;
+  }
+  .hero-live-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    padding-top: 72px;
+    padding-bottom: 80px;
+  }
+  .hero-copy {
+    flex: 1;
+    max-width: 30rem;
+  }
+  .hero-plaque {
+    width: 360px;
+    flex-shrink: 0;
+  }
+  .hero-actions {
+    flex-direction: row;
+  }
+  .hero-actions .btn {
+    width: auto;
+    padding: 0 28px;
+  }
+
+  .stat-strip-inner {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .game-tile-photo {
+    height: 160px;
+  }
+
+  .feature-content {
+    padding: 88px 0;
+  }
+  .feature-title {
+    font-size: 40px;
+  }
+
+  .cta-band-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 56px 20px;
+  }
+  .cta-title {
+    font-size: 34px;
+  }
+
+  .site-footer-inner {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 }
