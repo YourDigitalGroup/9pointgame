@@ -1,18 +1,13 @@
 // =========================================================
 // config.js — Supabase connection + shared game config
 //
-// FILL IN the two values below with YOUR project's values.
-// Supabase dashboard -> Project Settings -> API:
-//   SUPABASE_URL      = "Project URL"
-//   SUPABASE_ANON_KEY = "anon / public" key (NOT service_role)
-//
 // The anon key is safe to expose publicly — that's what it's
 // designed for. It's protected by Row Level Security in the DB.
 // NEVER put the service_role key in this file.
 // =========================================================
 
-const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const SUPABASE_URL = "https://chockxzervwwtqqcontc.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNob2NreHplcnZ3d3RxcWNvbnRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTk1OTQsImV4cCI6MjA5OTg3NTU5NH0.dm-LqWPENbkbiPK9HqYppNGrpVHTBGuhwr2rVORamTo";
 
 // Shared game definitions, used by both setup and scoring.
 const GAME_CONFIG = {
