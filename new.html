@@ -34,15 +34,21 @@
   </header>
 
   <main>
-    <section class="section wrap">
-      <p class="eyebrow">Round Setup</p>
-      <h1 class="page-title" id="game-title">4-Man / 12-Point</h1>
-      <p class="page-sub" id="game-desc">
-        12 points split each hole · base table 5-4-2-1
-      </p>
+    <!-- Branded page header band (light, no photo = fast) -->
+    <section class="page-header">
+      <div class="wrap">
+        <p class="page-header-eyebrow">Round Setup</p>
+        <h1 class="page-header-title" id="game-title">4-Man / 12-Point</h1>
+        <p class="page-header-sub" id="game-desc">
+          12 points split each hole · base table 5-4-2-1
+        </p>
+      </div>
+    </section>
 
+    <section class="section wrap setup-flow">
       <!-- Game type -->
-      <div class="setup-group">
+      <div class="card">
+        <div class="card-label"><span class="card-step">1</span> Game</div>
         <div class="chip-row" id="game-chips">
           <button type="button" class="chip" data-game="3p9">3-Man / 9-Point</button>
           <button type="button" class="chip" data-game="4p12">4-Man / 12-Point</button>
@@ -51,8 +57,8 @@
       </div>
 
       <!-- Match length -->
-      <div class="setup-group bordered">
-        <h2 class="setup-h">Match Length</h2>
+      <div class="card">
+        <div class="card-label"><span class="card-step">2</span> Match Length</div>
         <p class="setup-sub">
           You'll always play all 18 holes. This decides how many separate
           matches you play along the way.
@@ -68,8 +74,8 @@
       </div>
 
       <!-- Players -->
-      <div class="setup-group">
-        <h2 class="setup-h">Players</h2>
+      <div class="card">
+        <div class="card-label"><span class="card-step">3</span> Players</div>
         <p class="setup-sub" id="players-sub">
           You'll be the scorekeeper. Add the other golfers — they'll join as
           live viewers with the round code.
@@ -78,8 +84,8 @@
       </div>
 
       <!-- Bonus points -->
-      <div class="setup-group">
-        <h2 class="setup-h">Bonus Points</h2>
+      <div class="card">
+        <div class="card-label"><span class="card-step">4</span> Bonus Points</div>
         <p class="setup-sub">Off by default. Turn on any you want for this round.</p>
         <div class="toggle-list">
           <label class="toggle-row">
@@ -106,7 +112,7 @@
 
     <div class="action-bar">
       <div class="wrap">
-        <button type="button" class="btn btn-crimson btn-block" id="create-btn">
+        <button type="button" class="btn btn-crimson btn-block btn-lg" id="create-btn">
           Create Round &amp; Get Code
         </button>
       </div>

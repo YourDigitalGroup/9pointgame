@@ -1475,7 +1475,11 @@ table {
   line-height: 1.15;
   overflow-wrap: break-word;
 }
-.section.wrap { padding-top: 26px; }
+.section.wrap {
+  padding-top: 26px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 /* Game/length chips: full-width-friendly, wrap cleanly, bigger tap area */
 .chip-row {
@@ -1536,3 +1540,135 @@ table {
 /* Create button already full-width via .btn-block; give the sticky
    action bar a safe-area cushion and stop it clipping on small screens */
 .action-bar { padding-left: 16px; padding-right: 16px; }
+
+/* =========================================================
+   INNER-PAGE POLISH — branded headers, step cards, join card.
+   CSS-only (no photos) so the on-course pages stay fast.
+   ========================================================= */
+
+/* ---- Branded page-header band ---- */
+.page-header {
+  background:
+    linear-gradient(180deg, var(--navy-950), var(--navy-800));
+  color: #fff;
+  padding: 26px 0 28px;
+  border-bottom: 3px solid var(--crimson);
+}
+.page-header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+.page-header-title {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  overflow-wrap: break-word;
+}
+.page-header-sub {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 34rem;
+}
+
+/* ---- Setup flow: stacked step cards ---- */
+.setup-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  padding: 18px 16px 20px;
+  box-shadow: 0 4px 14px rgba(11, 30, 54, 0.05);
+}
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--navy-950);
+  margin-bottom: 4px;
+}
+.card-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  background: var(--crimson);
+  color: #fff;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+.card .setup-sub {
+  margin-bottom: 4px;
+}
+.card .chip-row {
+  margin-top: 14px;
+}
+
+/* ---- Join card ---- */
+.join-card {
+  margin-top: 22px;
+  background: #fff;
+  border: 1px solid var(--paper-line);
+  border-top: 3px solid var(--crimson);
+  border-radius: 8px;
+  padding: 28px 20px 24px;
+  box-shadow: 0 8px 22px rgba(11, 30, 54, 0.08);
+  text-align: center;
+}
+.join-mark {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  background: var(--navy-950);
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+}
+.join-field-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.join-card .join-form {
+  margin-top: 0;
+}
+.join-card .code-input {
+  text-align: center;
+}
+.join-hint {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 640px) {
+  .page-header-title { font-size: 38px; }
+  .join-card { max-width: 460px; margin-left: auto; margin-right: auto; }
+}

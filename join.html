@@ -34,30 +34,37 @@
   </header>
 
   <main>
+    <section class="page-header">
+      <div class="wrap">
+        <p class="page-header-eyebrow">Join a Round</p>
+        <h1 class="page-header-title">Watch it live</h1>
+        <p class="page-header-sub">
+          Enter the code your scorekeeper shared. You'll join as a live viewer.
+        </p>
+      </div>
+    </section>
+
     <section class="section wrap">
-      <p class="eyebrow">Join a Round</p>
-      <h1 class="page-title">Enter the round code</h1>
-      <p class="page-sub">
-        Your scorekeeper will have this from setup. You'll join as a live
-        viewer — no score entry needed.
-      </p>
-
-      <form class="join-form" id="join-form">
-        <input
-          type="text"
-          id="code-input"
-          class="code-input"
-          placeholder="GLF-482"
-          autocomplete="off"
-          autocapitalize="characters"
-          spellcheck="false"
-          inputmode="text"
-          maxlength="10"
-        />
-        <button type="submit" class="btn btn-crimson btn-block">Join</button>
-      </form>
-
-      <p class="form-error" id="join-error" hidden></p>
+      <div class="join-card">
+        <div class="join-mark">9</div>
+        <label class="join-field-label" for="code-input">Round Code</label>
+        <form class="join-form" id="join-form">
+          <input
+            type="text"
+            id="code-input"
+            class="code-input"
+            placeholder="GLF-482"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            inputmode="text"
+            maxlength="10"
+          />
+          <button type="submit" class="btn btn-crimson btn-block btn-lg">Join the Round</button>
+        </form>
+        <p class="form-error" id="join-error" hidden></p>
+        <p class="join-hint">No score entry needed — just follow along.</p>
+      </div>
     </section>
   </main>
 
