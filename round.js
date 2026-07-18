@@ -243,38 +243,63 @@ function renderScoreEntry() {
   }
 
   scoreEntryEl.innerHTML = `
-    <div class="setup-group bordered">
-      <h2 class="setup-h">Enter Hole ${nextHole.hole_number}</h2>
-      <p class="setup-sub">
-        Par
-        <input type="number" id="par-input" class="par-inline" min="3" max="5"
-          value="${nextHole.par}" style="width:44px;font-family:var(--font-mono);
-          margin:0 6px;padding:2px 6px;border:1px solid var(--paper-line);" />
-        · gross strokes for each player.
-      </p>
-      <div class="player-list" id="entry-list">
+    <div class="entry-card">
+      <div class="entry-head">
+        <div class="entry-hole">
+          <span class="entry-hole-label">Now Scoring</span>
+          <span class="entry-hole-num">Hole ${nextHole.hole_number}</span>
+        </div>
+        <label class="entry-par">
+          Par
+          <input type="number" id="par-input" class="entry-par-input"
+            min="3" max="6" value="${nextHole.par}" inputmode="numeric" />
+        </label>
+      </div>
+
+      <div class="entry-players">
         ${players
           .map(
             (p) => `
-          <div class="field">
-            <span class="field-num">${escapeHtml(shortName(p.name))}</span>
-            <input type="number" inputmode="numeric" min="1" max="20"
-              class="field-input entry-strokes" data-player="${p.id}"
-              placeholder="strokes" />
+          <div class="entry-row">
+            <span class="entry-name">${escapeHtml(p.name)}</span>
+            <div class="stepper">
+              <button type="button" class="step-btn step-minus"
+                data-player="${p.id}" aria-label="Fewer strokes">&minus;</button>
+              <input type="number" inputmode="numeric" min="1" max="20"
+                class="step-value entry-strokes" data-player="${p.id}"
+                placeholder="—" />
+              <button type="button" class="step-btn step-plus"
+                data-player="${p.id}" aria-label="More strokes">+</button>
+            </div>
           </div>`
           )
           .join("")}
       </div>
+
       <p class="form-error" id="entry-error" hidden></p>
-      <div class="action-bar">
-        <div class="wrap">
-          <button type="button" class="btn btn-crimson btn-block" id="save-hole">
-            Save Hole ${nextHole.hole_number}
-          </button>
-        </div>
-      </div>
+
+      <button type="button" class="btn btn-crimson btn-block btn-lg entry-save"
+        id="save-hole">
+        Save Hole ${nextHole.hole_number}
+      </button>
     </div>
   `;
+
+  // Stepper +/- buttons adjust the adjacent value.
+  scoreEntryEl.querySelectorAll(".step-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.player;
+      const input = scoreEntryEl.querySelector(
+        `.entry-strokes[data-player="${id}"]`
+      );
+      let v = parseInt(input.value, 10);
+      if (Number.isNaN(v)) v = nextHole.par; // first tap seeds from par
+      v += btn.classList.contains("step-plus") ? 1 : -1;
+      if (v < 1) v = 1;
+      if (v > 20) v = 20;
+      input.value = v;
+    });
+  });
 
   document.getElementById("save-hole").addEventListener("click", () =>
     saveHole(nextHole)
