@@ -1423,3 +1423,116 @@ table {
     font-size: 28px;
   }
 }
+
+/* =========================================================
+   STYLING PASS — fix cramped masthead/nav, setup overflow,
+   and small player fields. Overrides earlier rules where
+   they conflict (later rules win in CSS).
+   ========================================================= */
+
+/* ---- Masthead: brand-only top row, roomy centered nav ---- */
+.masthead-top-inner {
+  justify-content: center;   /* brand centered, no crowding buttons */
+  height: 52px;
+}
+.masthead-nav {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.masthead-nav-inner {
+  display: flex;
+  justify-content: center;    /* center the nav on the page */
+  gap: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.nav-link {
+  padding: 13px 12px;         /* clear separation so links don't run together */
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+/* On small phones, let the nav scroll horizontally but keep
+   generous spacing so labels never touch. */
+@media (max-width: 520px) {
+  .masthead-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .masthead-nav::-webkit-scrollbar { display: none; }
+  .masthead-nav-inner {
+    justify-content: flex-start;
+  }
+  .nav-link { padding: 13px 14px; }
+}
+
+/* ---- Setup page: make everything fit + readable ---- */
+/* Kill the source of left-edge run-off: constrain the page title
+   and let long labels wrap instead of overflowing. */
+.page-title {
+  font-size: 24px;
+  line-height: 1.15;
+  overflow-wrap: break-word;
+}
+.section.wrap { padding-top: 26px; }
+
+/* Game/length chips: full-width-friendly, wrap cleanly, bigger tap area */
+.chip-row {
+  gap: 10px;
+}
+.chip {
+  min-height: 48px;
+  padding: 0 16px;
+  font-size: 13px;
+  flex: 1 1 auto;             /* chips grow to share the row, then wrap */
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Section headings + subtext: larger, easier to read */
+.setup-h { font-size: 20px; }
+.setup-sub { font-size: 14px; line-height: 1.5; }
+
+/* Player name fields — the big fix: large, clearly bordered rows */
+.player-list { gap: 10px; }
+.field {
+  min-height: 56px;
+  padding: 0 16px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: #fff;
+  gap: 14px;
+}
+.field-num {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy-950);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.field-input {
+  font-size: 17px;            /* was 15px and hard to read */
+  font-weight: 500;
+}
+.field-input::placeholder {
+  color: rgba(85, 96, 110, 0.45);
+}
+
+/* Bonus toggle rows: a touch taller and clearer on mobile */
+.toggle-row { min-height: 58px; }
+.toggle-label { font-size: 15px; }
+
+/* Info box (match summary) — wrap long text, never overflow */
+.info-box p { overflow-wrap: break-word; }
+
+/* Create button already full-width via .btn-block; give the sticky
+   action bar a safe-area cushion and stop it clipping on small screens */
+.action-bar { padding-left: 16px; padding-right: 16px; }
