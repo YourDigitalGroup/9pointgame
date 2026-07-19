@@ -28,9 +28,9 @@
      images.unsplash.com/photo-... (keep the ?auto=format&fit=crop part). */
   --img-hero: url("https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&w=1400&q=70");
   --img-feature: url("https://images.unsplash.com/photo-1535132011086-b8818f016104?auto=format&fit=crop&w=1400&q=70");
-  --img-game-3: url("https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=800&q=70");
-  --img-game-4: url("https://images.unsplash.com/photo-1592919505780-303950717480?auto=format&fit=crop&w=800&q=70");
-  --img-game-5: url("https://images.unsplash.com/photo-1600861194942-f883de0dfe96?auto=format&fit=crop&w=800&q=70");
+  --img-game-3: url("game-3.jpg");
+  --img-game-4: url("game-4.jpg");
+  --img-game-5: url("game-5.jpg");
 }
 
 /* ---------- Reset ---------- */
@@ -928,43 +928,8 @@ table.hole-table {
 .btn-onphoto:active {
   background: rgba(255, 255, 255, 0.2);
 }
-.hero-plaque {
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
-}
 
 /* ---------- Stat strip ---------- */
-.stat-strip {
-  background: var(--navy-800);
-  color: #fff;
-}
-.stat-strip-inner {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-}
-.stat {
-  background: var(--navy-800);
-  padding: 18px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.stat-num {
-  font-family: var(--font-mono);
-  font-size: 24px;
-  font-weight: 600;
-  color: #fff;
-}
-.stat-label {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-}
 
 /* ---------- Game tiles with photos ---------- */
 .game-grid {
@@ -1159,31 +1124,27 @@ table.hole-table {
     font-size: 52px;
   }
   .hero-live-inner {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    text-align: center;
     gap: 48px;
-    padding-top: 72px;
-    padding-bottom: 80px;
+    padding-top: 80px;
+    padding-bottom: 88px;
   }
   .hero-copy {
-    flex: 1;
-    max-width: 30rem;
+    max-width: 34rem;
   }
-  .hero-plaque {
-    width: 360px;
-    flex-shrink: 0;
+  .hero-copy .hero-sub-light {
+    margin-left: auto;
+    margin-right: auto;
   }
   .hero-actions {
     flex-direction: row;
+    justify-content: center;
   }
   .hero-actions .btn {
     width: auto;
     padding: 0 28px;
-  }
-
-  .stat-strip-inner {
-    grid-template-columns: repeat(4, 1fr);
   }
 
   .game-grid {
@@ -1671,4 +1632,313 @@ table {
 @media (min-width: 640px) {
   .page-header-title { font-size: 38px; }
   .join-card { max-width: 460px; margin-left: auto; margin-right: auto; }
+}
+
+/* =========================================================
+   BATCH 2 — course picker, wager, money display, strokes editor
+   ========================================================= */
+
+/* ---- Course dropdown ---- */
+.course-select {
+  margin-top: 14px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: #fff;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--ink);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2355606e' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.course-select:focus {
+  outline: none;
+  border-color: var(--navy-950);
+}
+
+/* ---- Wager fields ---- */
+.wager-fields {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wager-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: #fff;
+}
+.wager-label {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.wager-note {
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.wager-input-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+.wager-input {
+  width: 72px;
+  height: 44px;
+  text-align: right;
+  border: 1px solid var(--paper-line);
+  border-radius: 4px;
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  -moz-appearance: textfield;
+}
+.wager-input::-webkit-outer-spin-button,
+.wager-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.wager-input:focus {
+  outline: none;
+  border-color: var(--navy-950);
+}
+
+/* ---- Money on the scoreboard ---- */
+.plaque-money {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 12px;
+  white-space: nowrap;
+}
+.money-up { color: #1f7a44; }
+.money-down { color: var(--crimson); }
+.money-even { color: var(--ink-soft); }
+
+.money-summary {
+  border: 1px solid var(--paper-line);
+  border-top: 3px solid var(--brass);
+  background: #fff;
+  border-radius: 8px;
+  padding: 14px 16px 16px;
+}
+.money-summary-head {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 10px;
+}
+.money-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--paper-line);
+}
+.money-line:last-child { border-bottom: none; }
+.money-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.money-amt {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ---- Strokes editor (scorekeeper, collapsible) ---- */
+.strokes-editor {
+  margin-bottom: 16px;
+  border: 1px solid var(--paper-line);
+  border-left: 3px solid var(--navy-950);
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+.strokes-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy-950);
+  cursor: pointer;
+  list-style: none;
+}
+.strokes-summary::-webkit-details-marker { display: none; }
+.strokes-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.strokes-body {
+  padding: 4px 16px 16px;
+  border-top: 1px solid var(--paper-line);
+}
+.strokes-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 12px 0;
+  line-height: 1.5;
+}
+.strokes-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+}
+.strokes-name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.stepper-sm .step-btn { width: 42px; height: 44px; font-size: 22px; }
+.stepper-sm .step-value { width: 48px; height: 44px; font-size: 18px; }
+#save-strokes { margin-top: 14px; }
+
+/* Navy button variant */
+.btn-navy {
+  background: var(--navy-950);
+  color: #fff;
+}
+.btn-navy:active { background: var(--navy-800); }
+
+/* Handicap stroke marker in the hole-by-hole table */
+.stroke-dot {
+  color: var(--crimson);
+  font-weight: 700;
+  margin-left: 2px;
+}
+.hole-caption {
+  caption-side: top;
+  text-align: left;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--paper-line);
+}
+
+/* =========================================================
+   Hole navigation + edit (score entry)
+   ========================================================= */
+.entry-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.entry-arrow {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--navy-950);
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.entry-arrow:active:not(:disabled) {
+  background: var(--navy-950);
+  color: #fff;
+}
+.entry-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.hole-jump {
+  flex: 1;
+  height: 48px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 0 14px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy-950);
+  text-align: center;
+  text-align-last: center;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.hole-jump:focus {
+  outline: none;
+  border-color: var(--navy-950);
+}
+.entry-status {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.entry-status-done {
+  background: rgba(31, 122, 68, 0.1);
+  color: #1f7a44;
+}
+.entry-status-open {
+  background: rgba(200, 32, 47, 0.08);
+  color: var(--crimson);
+}
+
+/* Ended-round message (after 24h purge) */
+.ended-card {
+  border: 1px solid var(--paper-line);
+  border-top: 3px solid var(--crimson);
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px 22px;
+  text-align: center;
+}
+.ended-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--navy-950);
+}
+.ended-copy {
+  margin: 12px 0 22px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
