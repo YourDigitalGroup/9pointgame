@@ -151,7 +151,7 @@ function renderPlayers() {
   playerList.innerHTML = "";
   for (let i = 0; i < c.players; i++) {
     const row = document.createElement("div");
-    row.className = "field";
+    row.className = "field field-player";
     row.innerHTML = `
       <span class="field-num">${i + 1}</span>
       <input
@@ -160,8 +160,31 @@ function renderPlayers() {
         placeholder="${i === 0 ? "You (scorekeeper)" : "Player " + (i + 1)}"
         autocomplete="off"
       />
+      <input
+        type="number"
+        class="player-hcp"
+        inputmode="numeric"
+        min="0"
+        max="54"
+        placeholder="HCP"
+        aria-label="Handicap"
+      />
     `;
     playerList.appendChild(row);
+  }
+  renderHcpNote();
+}
+
+// Explain how the entered handicap will be applied for the chosen length.
+function renderHcpNote() {
+  const note = document.getElementById("hcp-note");
+  if (!note) return;
+  if (matchLength === 18) {
+    note.textContent =
+      "Enter each player's handicap in the box on the right. Full handicap applies over all 18 holes.";
+  } else {
+    const div = matchLength === 6 ? 3 : 2;
+    note.textContent = `Enter each player's handicap in the box on the right. Handicap ÷ ${div} = strokes per match, rounded down. A 6 → ${Math.floor(6 / div)} per match.`;
   }
 }
 
@@ -184,6 +207,7 @@ lengthChips.addEventListener("click", (e) => {
   if (!chip) return;
   matchLength = Number(chip.dataset.length);
   renderLength();
+  renderHcpNote();
 });
 
 function showError(msg) {
@@ -205,6 +229,9 @@ createBtn.addEventListener("click", async () => {
 
   const names = [...document.querySelectorAll(".player-name")].map((el, i) =>
     el.value.trim() || (i === 0 ? "Scorekeeper" : `Player ${i + 1}`)
+  );
+  const handicaps = [...document.querySelectorAll(".player-hcp")].map(
+    (el) => Math.min(54, Math.max(0, parseInt(el.value, 10) || 0))
   );
 
   const config = GAME_CONFIG[gameType];
@@ -255,15 +282,49 @@ createBtn.addEventListener("click", async () => {
     });
     if (cfgErr) throw cfgErr;
 
-    // 3. Players (first is scorekeeper)
+    // 3. Players (first is scorekeeper). Return rows so we get their IDs.
     const playerRows = names.map((name, i) => ({
       round_id: round.id,
       name,
       role: i === 0 ? "scorekeeper" : "viewer",
       seat_order: i + 1,
     }));
-    const { error: plErr } = await supabase.from("players").insert(playerRows);
+    const { data: insertedPlayers, error: plErr } = await supabase
+      .from("players")
+      .insert(playerRows)
+      .select();
     if (plErr) throw plErr;
+
+    // 3b. Per-match handicap strokes, derived from each player's handicap.
+    //     6-hole game = 3 matches (÷3), 9-hole = 2 (÷2), 18-hole = full.
+    //     No fractional strokes — floor the division.
+    const ranges = getMatchRanges(matchLength);
+    const divisor = matchLength === 18 ? 1 : ranges.length; // 3, 2, or 1
+    const strokeRows = [];
+    // insertedPlayers come back in insert order = seat_order order.
+    const bySeat = [...insertedPlayers].sort(
+      (a, b) => a.seat_order - b.seat_order
+    );
+    bySeat.forEach((p, i) => {
+      const hcp = handicaps[i] || 0;
+      const perMatch = matchLength === 18 ? hcp : Math.floor(hcp / divisor);
+      if (perMatch > 0) {
+        for (const m of ranges) {
+          strokeRows.push({
+            round_id: round.id,
+            player_id: p.id,
+            match_number: m.matchNumber,
+            strokes: perMatch,
+          });
+        }
+      }
+    });
+    if (strokeRows.length > 0) {
+      const { error: msErr } = await supabase
+        .from("match_strokes")
+        .insert(strokeRows);
+      if (msErr) throw msErr;
+    }
 
     // 4. Holes 1-18 — par + stroke index from the chosen course.
     //    If no course was picked, default par 4 and stroke index in hole order.

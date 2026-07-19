@@ -1947,21 +1947,6 @@ table {
 .field-player {
   gap: 10px;
 }
-.field-hcp {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-  padding-left: 10px;
-  border-left: 1px solid var(--paper-line);
-}
-.field-hcp-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
 .player-hcp {
   width: 52px;
   height: 40px;
@@ -1989,4 +1974,43 @@ table {
   font-size: 11px;
   line-height: 1.5;
   color: var(--ink-soft);
+}
+
+/* Player row: name fills, handicap is a compact box on the same line */
+.field-player {
+  gap: 10px;
+}
+.field-player .player-name {
+  flex: 1;
+  min-width: 0;
+}
+.field-player .player-hcp {
+  flex-shrink: 0;
+  width: 64px;
+  height: 44px;
+  text-align: center;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  -moz-appearance: textfield;
+}
+.field-player .player-hcp::-webkit-outer-spin-button,
+.field-player .player-hcp::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.field-player .player-hcp:focus {
+  outline: none;
+  border-color: var(--navy-950);
+}
+.field-player .player-hcp::placeholder {
+  color: rgba(85, 96, 110, 0.5);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
