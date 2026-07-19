@@ -4,6 +4,29 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.APP;
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Delete-on-load cleanup: remove rounds finalized more than 24h ago.
+async function purgeStaleRounds() {
+  const cutoff24 = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const cutoff48 = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+  try {
+    // Finished rounds: cleared 24h after the final hole.
+    await supabase
+      .from("rounds")
+      .delete()
+      .not("finalized_at", "is", null)
+      .lt("finalized_at", cutoff24);
+    // Abandoned rounds (never finished 18): cleared 48h after creation.
+    await supabase
+      .from("rounds")
+      .delete()
+      .is("finalized_at", null)
+      .lt("created_at", cutoff48);
+  } catch (e) {
+    console.warn("purge skipped:", e);
+  }
+}
+purgeStaleRounds();
+
 const form = document.getElementById("join-form");
 const input = document.getElementById("code-input");
 const errorEl = document.getElementById("join-error");
