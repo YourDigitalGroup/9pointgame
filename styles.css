@@ -17,9 +17,9 @@
   --ink: #16181d;
   --ink-soft: #55606e;
 
-  --font-display: "IBM Plex Serif", Georgia, serif;
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* ---- Landing page imagery (Unsplash) ----
      Swap any of these if a photo doesn't load. Format:
@@ -56,6 +56,18 @@ body {
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+/* Inter is proportional; keep digit columns aligned everywhere numbers matter. */
+.tabular,
+.hole-table,
+.plaque-total,
+.rank-badge,
+.round-bar-code,
+.entry-stat-value,
+.step-value,
+.money-amt,
+.plaque-money {
+  font-variant-numeric: tabular-nums;
 }
 
 a {
@@ -711,22 +723,23 @@ table.hole-table {
 }
 
 .hole-table td {
-  padding: 11px 6px;
-  border-bottom: 1px solid #cfcabb;
-  font-family: var(--font-mono);
-  font-size: 18px;
+  padding: 13px 4px;
+  border-bottom: 1px solid #c2bcab;
+  font-family: var(--font-sans);
+  font-size: 20px;
   font-weight: 700;
-  color: #0b1220;
+  color: #0a0f1a;
 }
 /* Zebra striping — stronger so rows are trackable in sunlight */
 .hole-table tbody tr:nth-child(even) {
-  background: rgba(11, 30, 54, 0.07);
+  background: rgba(11, 30, 54, 0.08);
 }
 /* Highlight the hole winner's cell — solid brass, high contrast */
 .hole-table td.cell-win {
   background: var(--brass);
   color: #fff;
   font-weight: 800;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.12);
 }
 /* Totals row — heavy, clearly separated */
 .hole-table tfoot .total-row td {
@@ -836,36 +849,20 @@ table.hole-table {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  height: 60px;
-  padding-left: 4px;
-  padding-right: 4px;
+  height: 52px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 .brand {
   display: flex;
   align-items: center;
-  gap: 11px;
   min-width: 0;
-}
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  background: var(--crimson);
-  color: #fff;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 19px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 .brand-name {
   font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: #fff;
   white-space: nowrap;
 }
@@ -875,19 +872,19 @@ table.hole-table {
   gap: 8px;
   flex-shrink: 0;
 }
-/* Share button: subtle, icon + label, doesn't crowd the wordmark */
+/* Share button — compact (about half the previous size) */
 .btn-share {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 38px;
-  padding: 0 14px;
+  gap: 4px;
+  height: 26px;
+  padding: 0 9px;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 8px;
+  border-radius: 6px;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -897,8 +894,8 @@ table.hole-table {
   background: rgba(255, 255, 255, 0.2);
 }
 .btn-share svg {
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
 }
 .btn-ghost {
