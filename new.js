@@ -179,12 +179,15 @@ function renderPlayers() {
 function renderHcpNote() {
   const note = document.getElementById("hcp-note");
   if (!note) return;
-  if (matchLength === 18) {
+  if (matchLength === 6) {
     note.textContent =
-      "Enter each player's handicap in the box on the right. Full handicap applies over all 18 holes.";
+      "Enter each player's handicap in the box on the right. In 6-hole matches the handicap is split across the 3 matches, so it must be a multiple of 3 (a 6 → 2 per match).";
+  } else if (matchLength === 9) {
+    note.textContent =
+      "Enter each player's handicap in the box on the right. The full handicap applies to each 9-hole match, landing on the hardest holes.";
   } else {
-    const div = matchLength === 6 ? 3 : 2;
-    note.textContent = `Enter each player's handicap in the box on the right. Handicap ÷ ${div} = strokes per match, rounded down. A 6 → ${Math.floor(6 / div)} per match.`;
+    note.textContent =
+      "Enter each player's handicap in the box on the right. The full handicap applies over all 18 holes, landing on the hardest holes.";
   }
 }
 
@@ -239,6 +242,21 @@ createBtn.addEventListener("click", async () => {
   config.table.forEach((pts, idx) => {
     pointsTable[String(idx + 1)] = pts;
   });
+
+  // 6-hole games split the handicap across 3 matches, so each handicap must
+  // be a multiple of 3 (no fractional strokes). Block and explain if not.
+  if (matchLength === 6) {
+    const bad = [];
+    handicaps.forEach((h, i) => {
+      if (h > 0 && h % 3 !== 0) bad.push(`${names[i]} (${h})`);
+    });
+    if (bad.length) {
+      errorEl.textContent =
+        `6-hole matches divide the handicap by 3, so each must be a multiple of 3 (0, 3, 6, 9, 12…). Fix: ${bad.join(", ")}.`;
+      errorEl.hidden = false;
+      return;
+    }
+  }
 
   createBtn.disabled = true;
   createBtn.textContent = "Creating…";
@@ -296,10 +314,11 @@ createBtn.addEventListener("click", async () => {
     if (plErr) throw plErr;
 
     // 3b. Per-match handicap strokes, derived from each player's handicap.
-    //     6-hole game = 3 matches (÷3), 9-hole = 2 (÷2), 18-hole = full.
-    //     No fractional strokes — floor the division.
+    //     6-hole game (3 matches): handicap ÷ 3 = strokes per match. Must
+    //       divide evenly — non-multiples of 3 are blocked at validation.
+    //     9-hole & 18-hole: no division — the full handicap applies to each
+    //       match, and strokes land on the hardest holes by stroke index.
     const ranges = getMatchRanges(matchLength);
-    const divisor = matchLength === 18 ? 1 : ranges.length; // 3, 2, or 1
     const strokeRows = [];
     // insertedPlayers come back in insert order = seat_order order.
     const bySeat = [...insertedPlayers].sort(
@@ -307,7 +326,7 @@ createBtn.addEventListener("click", async () => {
     );
     bySeat.forEach((p, i) => {
       const hcp = handicaps[i] || 0;
-      const perMatch = matchLength === 18 ? hcp : Math.floor(hcp / divisor);
+      const perMatch = matchLength === 6 ? hcp / 3 : hcp;
       if (perMatch > 0) {
         for (const m of ranges) {
           strokeRows.push({
