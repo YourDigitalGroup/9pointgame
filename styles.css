@@ -686,14 +686,16 @@ table.hole-table {
 }
 
 .hole-table th {
-  padding: 8px 6px;
-  border-bottom: 2px solid var(--paper-line);
+  padding: 10px 6px;
+  border-bottom: 2px solid var(--navy-950);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--navy-950);
+  font-weight: 700;
   white-space: nowrap;
+  background: rgba(11, 30, 54, 0.06);
 }
 /* Player score columns are centered; hole/par columns left-aligned & narrow */
 .hole-table th.num,
@@ -705,45 +707,47 @@ table.hole-table {
   width: 44px;
   text-align: left;
   color: var(--ink-soft);
+  font-weight: 600;
 }
 
 .hole-table td {
-  padding: 7px 6px;
-  border-bottom: 1px solid var(--paper-line);
+  padding: 11px 6px;
+  border-bottom: 1px solid #cfcabb;
   font-family: var(--font-mono);
-  font-size: 15px;
-  color: var(--ink);
+  font-size: 18px;
+  font-weight: 700;
+  color: #0b1220;
 }
-/* Zebra striping to track across rows */
+/* Zebra striping — stronger so rows are trackable in sunlight */
 .hole-table tbody tr:nth-child(even) {
-  background: rgba(11, 30, 54, 0.035);
+  background: rgba(11, 30, 54, 0.07);
 }
-/* Highlight the hole winner's cell */
+/* Highlight the hole winner's cell — solid brass, high contrast */
 .hole-table td.cell-win {
-  background: rgba(169, 134, 47, 0.18);
-  font-weight: 700;
-  color: var(--navy-950);
-  border-radius: 4px;
+  background: var(--brass);
+  color: #fff;
+  font-weight: 800;
 }
-/* Totals row */
+/* Totals row — heavy, clearly separated */
 .hole-table tfoot .total-row td {
-  padding: 10px 6px;
-  border-top: 2px solid var(--navy-950);
+  padding: 13px 6px;
+  border-top: 3px solid var(--navy-950);
   border-bottom: none;
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--navy-950);
-  background: rgba(11, 30, 54, 0.05);
+  font-weight: 800;
+  font-size: 20px;
+  color: #fff;
+  background: var(--navy-950);
 }
-.hole-table tfoot .total-row .hole-col {
+.hole-table tfoot .total-row .hole-col,
+.hole-table tfoot .total-row .par-col {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
 }
-.hole-table tr:last-child td {
+.hole-table tbody tr:last-child td {
   border-bottom: none;
 }
 
@@ -831,37 +835,71 @@ table.hole-table {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  gap: 16px;
+  height: 60px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
+  min-width: 0;
 }
 .brand-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
   background: var(--crimson);
   color: #fff;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 17px;
-  border-radius: 2px;
+  font-size: 19px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 .brand-name {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: #fff;
+  white-space: nowrap;
 }
 .masthead-actions {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+}
+/* Share button: subtle, icon + label, doesn't crowd the wordmark */
+.btn-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.btn-share:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+.btn-share svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 .btn-ghost {
   background: transparent;
@@ -1873,6 +1911,7 @@ table {
 .btn-navy:active { background: var(--navy-800); }
 
 /* Handicap stroke marker in the hole-by-hole table */
+.cell-win .stroke-dot { color: #fff; }
 .stroke-dot {
   color: var(--crimson);
   font-weight: 700;
@@ -2091,9 +2130,9 @@ table {
 
 /* Caption key: little shaded swatch matching the winner highlight */
 .cell-win-key {
-  background: rgba(169, 134, 47, 0.28);
-  padding: 1px 5px;
+  background: var(--brass);
+  padding: 1px 6px;
   border-radius: 3px;
-  color: var(--navy-950);
-  font-weight: 600;
+  color: #fff;
+  font-weight: 700;
 }

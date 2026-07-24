@@ -749,8 +749,11 @@ shareBtn.addEventListener("click", async () => {
     } catch {}
   } else {
     await navigator.clipboard.writeText(`${text}\n${url}`);
-    shareBtn.textContent = "Copied";
-    setTimeout(() => (shareBtn.textContent = "Share"), 1500);
+    const label = shareBtn.querySelector(".btn-share-label");
+    if (label) {
+      label.textContent = "Copied";
+      setTimeout(() => (label.textContent = "Share"), 1500);
+    }
   }
 });
 
