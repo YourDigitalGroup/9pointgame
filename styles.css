@@ -686,26 +686,62 @@ table.hole-table {
 }
 
 .hole-table th {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--paper-line);
+  padding: 8px 6px;
+  border-bottom: 2px solid var(--paper-line);
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-soft);
   white-space: nowrap;
 }
+/* Player score columns are centered; hole/par columns left-aligned & narrow */
 .hole-table th.num,
 .hole-table td.num {
-  text-align: right;
+  text-align: center;
+}
+.hole-table .hole-col,
+.hole-table .par-col {
+  width: 44px;
+  text-align: left;
+  color: var(--ink-soft);
 }
 
 .hole-table td {
-  padding: 10px 14px;
+  padding: 7px 6px;
   border-bottom: 1px solid var(--paper-line);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 15px;
   color: var(--ink);
+}
+/* Zebra striping to track across rows */
+.hole-table tbody tr:nth-child(even) {
+  background: rgba(11, 30, 54, 0.035);
+}
+/* Highlight the hole winner's cell */
+.hole-table td.cell-win {
+  background: rgba(169, 134, 47, 0.18);
+  font-weight: 700;
+  color: var(--navy-950);
+  border-radius: 4px;
+}
+/* Totals row */
+.hole-table tfoot .total-row td {
+  padding: 10px 6px;
+  border-top: 2px solid var(--navy-950);
+  border-bottom: none;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--navy-950);
+  background: rgba(11, 30, 54, 0.05);
+}
+.hole-table tfoot .total-row .hole-col {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
 }
 .hole-table tr:last-child td {
   border-bottom: none;
@@ -2051,4 +2087,13 @@ table {
   font-weight: 700;
   margin-left: 3px;
   font-size: 1.1em;
+}
+
+/* Caption key: little shaded swatch matching the winner highlight */
+.cell-win-key {
+  background: rgba(169, 134, 47, 0.28);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--navy-950);
+  font-weight: 600;
 }

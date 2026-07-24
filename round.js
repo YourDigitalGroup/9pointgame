@@ -408,6 +408,10 @@ function renderHoleTable(liveMatchNo) {
     players.map((p) => `<th class="num">${escapeHtml(shortName(p.name))}</th>`).join("") +
     `</tr>`;
 
+  // Running totals per player, summed as we build the rows.
+  const totals = {};
+  players.forEach((p) => (totals[p.id] = 0));
+
   const bodyRows = scoredHoles
     .map((h) => {
       const holeScores = players.map((p) => {
@@ -420,21 +424,33 @@ function renderHoleTable(liveMatchNo) {
       const pts = window.SCORING.computeHolePoints(holeScores, config, h.par);
       const byId = {};
       pts.forEach((r) => (byId[r.playerId] = r.total));
-      // Mark holes where a player received a stroke with a small dot.
+      players.forEach((p) => (totals[p.id] += byId[p.id] || 0));
+
+      // The hole "winner" is whoever scored the most points on it. Highlight
+      // that cell (can be a tie — highlight all who share the top).
+      const top = Math.max(...players.map((p) => byId[p.id] ?? 0));
       const cells = players
         .map((p) => {
+          const val = byId[p.id] ?? 0;
           const got = (allocByPlayer[p.id][h.id] || 0) > 0;
-          return `<td class="num">${formatPts(byId[p.id] ?? 0)}${got ? '<span class="stroke-dot" title="handicap stroke">•</span>' : ""}</td>`;
+          const win = val > 0 && val === top ? " cell-win" : "";
+          return `<td class="num${win}">${formatPts(val)}${got ? '<span class="stroke-dot" title="handicap stroke">•</span>' : ""}</td>`;
         })
         .join("");
-      return `<tr><td>${h.hole_number}</td><td>${h.par}</td>${cells}</tr>`;
+      return `<tr><td class="hole-col">${h.hole_number}</td><td class="par-col">${h.par}</td>${cells}</tr>`;
     })
     .join("");
 
+  // Totals row — each player's match points so far.
+  const totalCells = players
+    .map((p) => `<td class="num">${formatPts(totals[p.id])}</td>`)
+    .join("");
+  const totalRow = `<tr class="total-row"><td class="hole-col">Tot</td><td class="par-col"></td>${totalCells}</tr>`;
+
   const caption = anyStrokes
-    ? `<caption class="hole-caption">Net points shown · <span class="stroke-dot">•</span> = handicap stroke</caption>`
-    : "";
-  holeTable.innerHTML = `${caption}<thead>${header}</thead><tbody>${bodyRows}</tbody>`;
+    ? `<caption class="hole-caption">Net points · <span class="cell-win-key">shaded</span> = hole winner · <span class="stroke-dot">•</span> = handicap stroke</caption>`
+    : `<caption class="hole-caption">Net points · <span class="cell-win-key">shaded</span> = hole winner</caption>`;
+  holeTable.innerHTML = `${caption}<thead>${header}</thead><tbody>${bodyRows}</tbody><tfoot>${totalRow}</tfoot>`;
 }
 
 // ---- Scorekeeper entry ----
