@@ -6,6 +6,7 @@ const {
   SUPABASE_ANON_KEY,
   GAME_CONFIG,
   getMatchRanges,
+  matchNumberForHole,
 } = window.APP;
 const { computeMatchLeaderboard, computeWager } = window.SCORING;
 
@@ -460,6 +461,23 @@ function renderScoreEntry() {
     return f ? f.strokes : null;
   };
 
+  // Work out which players get a handicap stroke on THIS hole, so we can mark
+  // their name with an asterisk. Strokes are allocated per match to the
+  // hardest holes by stroke index (same logic the scoring engine uses).
+  const matchNo = matchNumberForHole(hole.hole_number, round.match_length);
+  const range = getMatchRanges(round.match_length).find(
+    (r) => r.matchNumber === matchNo
+  );
+  const matchHoles = holes.filter(
+    (h) => h.hole_number >= range.startHole && h.hole_number <= range.endHole
+  );
+  const strokesThisHole = {};
+  for (const p of players) {
+    const count = (strokesByMatch[matchNo] || {})[p.id] || 0;
+    const alloc = window.SCORING.allocateStrokes(matchHoles, count);
+    strokesThisHole[p.id] = alloc[hole.id] || 0;
+  }
+
   const statusChip = isComplete
     ? `<span class="entry-status entry-status-done">Saved · tap to edit</span>`
     : `<span class="entry-status entry-status-open">Not yet scored</span>`;
@@ -489,26 +507,33 @@ function renderScoreEntry() {
           <span class="entry-hole-num">Hole ${hole.hole_number}</span>
           ${statusChip}
         </div>
-        <label class="entry-par">
-          Par
-          <input type="number" id="par-input" class="entry-par-input"
-            min="3" max="6" value="${hole.par}" inputmode="numeric" />
-        </label>
+        <div class="entry-stats">
+          <div class="entry-stat">
+            <span class="entry-stat-label">Par</span>
+            <span class="entry-stat-value">${hole.par}</span>
+          </div>
+          <div class="entry-stat">
+            <span class="entry-stat-label">Hdcp</span>
+            <span class="entry-stat-value">${hole.stroke_index ?? "—"}</span>
+          </div>
+        </div>
       </div>
 
       <div class="entry-players">
         ${players
           .map((p) => {
             const v = scoreFor(p.id);
+            const seed = v == null ? hole.par : v; // pre-fill at par
+            const gets = strokesThisHole[p.id] > 0;
             return `
           <div class="entry-row">
-            <span class="entry-name">${escapeHtml(p.name)}</span>
+            <span class="entry-name">${escapeHtml(p.name)}${gets ? '<span class="stroke-star" title="gets a handicap stroke here">*</span>' : ""}</span>
             <div class="stepper">
               <button type="button" class="step-btn step-minus"
                 data-player="${p.id}" aria-label="Fewer strokes">&minus;</button>
               <input type="number" inputmode="numeric" min="1" max="20"
                 class="step-value entry-strokes" data-player="${p.id}"
-                value="${v == null ? "" : v}" placeholder="—" />
+                value="${seed}" />
               <button type="button" class="step-btn step-plus"
                 data-player="${p.id}" aria-label="More strokes">+</button>
             </div>
@@ -570,7 +595,6 @@ async function saveHole(hole) {
   errEl.hidden = true;
 
   const inputs = [...document.querySelectorAll(".entry-strokes")];
-  const par = Number(document.getElementById("par-input").value) || hole.par;
 
   const entries = inputs.map((el) => ({
     player_id: el.dataset.player,
@@ -590,13 +614,6 @@ async function saveHole(hole) {
   btn.textContent = "Saving…";
 
   try {
-    // Update par if the scorekeeper changed it.
-    if (par !== hole.par) {
-      await supabase.from("holes").update({ par }).eq("id", hole.id);
-      hole.par = par;
-      const local = holes.find((h) => h.id === hole.id);
-      if (local) local.par = par;
-    }
     const rows = entries.map((e) => ({
       hole_id: hole.id,
       player_id: e.player_id,
@@ -681,13 +698,12 @@ function subscribeRealtime() {
     .subscribe();
 }
 
-// True if the scorekeeper currently has a score/par input focused.
+// True if the scorekeeper currently has a score input focused.
 function isEntryFocused() {
   const el = document.activeElement;
   return (
     el &&
     (el.classList.contains("entry-strokes") ||
-      el.id === "par-input" ||
       el.classList.contains("strokes-value"))
   );
 }

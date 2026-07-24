@@ -2014,3 +2014,41 @@ table {
   font-weight: 600;
   letter-spacing: 0.04em;
 }
+
+/* Read-only par / hole-handicap stat boxes on the score-entry header */
+.entry-stats {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.entry-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 52px;
+  padding: 6px 10px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.entry-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.entry-stat-value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy-950);
+  line-height: 1.1;
+}
+/* Handicap-stroke asterisk next to a player's name */
+.stroke-star {
+  color: var(--crimson);
+  font-weight: 700;
+  margin-left: 3px;
+  font-size: 1.1em;
+}
