@@ -1,6 +1,14 @@
 // join.js — validate a room code and send the viewer to the round page.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+if (!window.APP) {
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.innerHTML =
+      '<div style="margin:24px;padding:16px;border:2px solid #c8202f;border-radius:8px;color:#c8202f;font-weight:600;font-family:sans-serif;">This page can\'t load its configuration (config.js). Re-upload config.js, then hard-refresh.</div>';
+  });
+  throw new Error("Missing window.APP");
+}
+
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.APP;
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

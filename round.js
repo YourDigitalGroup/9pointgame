@@ -1,6 +1,15 @@
 // round.js — live leaderboard + scorekeeper score entry.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+// Guard config/scoring load so a missing file shows a message, not a dead page.
+if (!window.APP || !window.SCORING) {
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.innerHTML =
+      '<div style="margin:24px;padding:16px;border:2px solid #c8202f;border-radius:8px;color:#c8202f;font-weight:600;font-family:sans-serif;">This round can\'t load its configuration (config.js / scoring.js). Re-upload those files, then hard-refresh.</div>';
+  });
+  throw new Error("Missing window.APP or window.SCORING");
+}
+
 const {
   SUPABASE_URL,
   SUPABASE_ANON_KEY,

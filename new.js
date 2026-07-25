@@ -1,6 +1,32 @@
 // new.js — round setup: pick game/length/players/bonuses, then create.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+// config.js sets window.APP. If it failed to load, got stripped, or is stale,
+// destructuring it directly would throw and silently kill this whole script
+// (that's the classic "course dropdown stopped working" symptom). Guard it and
+// show a clear message instead of a dead page.
+function appConfigError(msg) {
+  document.addEventListener("DOMContentLoaded", () => {
+    const box = document.getElementById("setup-error") || document.body;
+    box.hidden = false;
+    box.textContent = msg;
+    box.style.cssText =
+      "display:block;margin:24px;padding:16px;border:2px solid #c8202f;border-radius:8px;color:#c8202f;font-weight:600;";
+  });
+  throw new Error(msg);
+}
+
+if (!window.APP) {
+  appConfigError(
+    "Setup can't load its configuration (config.js). Re-upload config.js, then hard-refresh."
+  );
+}
+if (!window.APP.COURSES || Object.keys(window.APP.COURSES).length === 0) {
+  appConfigError(
+    "No courses found in config.js. The course list is missing — re-upload the full config.js, then hard-refresh."
+  );
+}
+
 const {
   SUPABASE_URL,
   SUPABASE_ANON_KEY,
