@@ -1,4 +1,4 @@
-name: Deploy via SSH
+name: Deploy to FTP
 
 on:
   push:
@@ -10,12 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: easingthemes/ssh-deploy@v5.1.0
+      - uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: 187.124.69.182
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET_DIR }}
-          ARGS: "-avzr --delete"
-          EXCLUDE: ".git/, .github/, node_modules/, README.md, .gitignore"
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          local-dir: ./
+          exclude: |
+            **/.git/**
+            **/.github/**
+            **/node_modules/**
+            README.md
+            .gitignore
