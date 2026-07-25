@@ -709,17 +709,27 @@ table.hole-table {
   white-space: nowrap;
   background: rgba(11, 30, 54, 0.06);
 }
-/* Player score columns are centered; hole/par columns left-aligned & narrow */
+/* Player score columns are centered */
 .hole-table th.num,
 .hole-table td.num {
   text-align: center;
 }
+/* HOLE / PAR form a distinct label zone: centered under their headers,
+   uniform navy tint (overrides zebra), and a hard divider before the
+   scores so they never read as part of the brass grid. */
+.hole-table thead th:first-child,
+.hole-table thead th:nth-child(2),
 .hole-table .hole-col,
 .hole-table .par-col {
-  width: 44px;
-  text-align: left;
-  color: var(--ink-soft);
-  font-weight: 600;
+  width: 46px;
+  text-align: center;
+  color: var(--navy-950);
+  font-weight: 700;
+  background: rgba(11, 30, 54, 0.07);
+}
+.hole-table thead th:nth-child(2),
+.hole-table .par-col {
+  border-right: 2px solid var(--navy-950);
 }
 
 .hole-table td {
@@ -909,17 +919,15 @@ table.hole-table {
 
 .masthead-nav {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
 .masthead-nav::-webkit-scrollbar {
   display: none;
 }
 .masthead-nav-inner {
   display: flex;
-  gap: 4px;
-  white-space: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 4px;
 }
 .nav-link {
   padding: 12px 14px;
@@ -1481,22 +1489,17 @@ table {
   padding: 13px 12px;         /* clear separation so links don't run together */
   font-size: 12px;
   letter-spacing: 0.06em;
-  flex-shrink: 0;
 }
 
-/* On small phones, let the nav scroll horizontally but keep
-   generous spacing so labels never touch. */
+/* On small phones, wrap the nav onto two centered rows instead of
+   letting the last item ("Scoring") run off the edge. */
 @media (max-width: 520px) {
-  .masthead-nav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .masthead-nav::-webkit-scrollbar { display: none; }
   .masthead-nav-inner {
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0;
   }
-  .nav-link { padding: 13px 14px; }
+  .nav-link { padding: 11px 12px; }
 }
 
 /* ---- Setup page: make everything fit + readable ---- */
